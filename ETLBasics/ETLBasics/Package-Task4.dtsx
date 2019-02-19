@@ -1,0 +1,833 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="2/15/2019 8:53:01 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="LAPTOP-K3DT06D7"
+  DTS:CreatorName="LAPTOP-K3DT06D7\Käyttäjä"
+  DTS:DTSID="{19481A35-9818-4567-8423-1B86313EFBEA}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="15.0.1100.123"
+  DTS:LocaleID="1035"
+  DTS:ObjectName="Package-Task4"
+  DTS:PackageType="5"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{3A6BF521-7AC0-481C-B29F-1D432C758106}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[Excel Connection Manager]"
+      DTS:CreationName="EXCEL"
+      DTS:DTSID="{CF206E31-8089-4054-B511-EC9D9F37FA64}"
+      DTS:ObjectName="Excel Connection Manager">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Provider=Microsoft.Jet.OLEDB.4.0;Data Source=C:\Users\Käyttäjä\Desktop\excel\ListOfPersons.xls;Extended Properties=&quot;Excel 8.0;HDR=YES&quot;;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LAPTOP-K3DT06D7\SQLEXPRESS.SSIS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{EB08DF89-35C4-47B7-A15A-9420A58AD62D}"
+      DTS:ObjectName="LAPTOP-K3DT06D7\SQLEXPRESS.SSIS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=LAPTOP-K3DT06D7\SQLEXPRESS;Initial Catalog=SSIS;Provider=SQLNCLI11.1;Integrated Security=SSPI;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{b26053c6-27c1-44cd-bca3-3f947fb72a6a}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{EB08DF89-35C4-47B7-A15A-9420A58AD62D}"
+          SQLTask:SqlStatementSource="DELETE FROM City" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Import data from Exel to SSIS database"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{DC3A6A82-A6FA-47AE-B8B2-1B1B73567682}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Import data from Exel to SSIS database"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Import data from Exel to SSIS database\Aggregate"
+              componentClassID="Microsoft.Aggregate"
+              contactInfo="Aggregate;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;3"
+              description="Aggregates data with functions such as Average, Sum, Count, Max, and Min. For example, group data to compute the sum of sales per product or the average visits per day."
+              name="Aggregate"
+              version="3">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                  name="KeyScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                  name="Keys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the approximate number of distinct values in a column that the aggregation counts distinctly. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no CountDistinctScale value is used."
+                  name="CountDistinctScale"
+                  typeConverter="KeyScaleType">0</property>
+                <property
+                  dataType="System.Null"
+                  description="Specifies the exact number of distinct values in a column that the aggregation counts distinctly. If a CountDistinctScale value is specified, the value in CountDistinctKeys takes precedence."
+                  name="CountDistinctKeys" />
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage by which memory can be extended during the aggregation. Valid values are between 1 and 100."
+                  name="AutoExtendFactor">25</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Import data from Exel to SSIS database\Aggregate.Inputs[Aggregate Input 1]"
+                  name="Aggregate Input 1">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import data from Exel to SSIS database\Aggregate.Inputs[Aggregate Input 1].Columns[City]"
+                      cachedDataType="nText"
+                      cachedName="City"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[City]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1]"
+                  name="Aggregate Output 1">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the approximate number of group by keys that the aggregation produces. Low indicates 500,000 key values, Medium indicates 5 million key values, and High indicates more than 25 million key values. Unspecified indicates no KeyScale value is used."
+                      name="KeyScale"
+                      typeConverter="KeyScaleType">0</property>
+                    <property
+                      dataType="System.Null"
+                      description="Specifies the exact number of group by keys that the aggregation produces. If a KeyScale value is specified, the value in Keys takes precedence."
+                      name="Keys" />
+                  </properties>
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1].Columns[City]"
+                      dataType="ui8"
+                      lineageId="Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1].Columns[City]"
+                      name="City">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the ID of the input column used in the aggregation."
+                          name="AggregationColumnId">#{Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[City]}</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the type of aggregation."
+                          name="AggregationType"
+                          typeConverter="AggregationType">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Indicates whether the column requires special handling because it may contain oversized data or it requires precision beyond a float data type."
+                          name="IsBig">1</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the string comparison options."
+                          name="AggregationComparisonFlags">0</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import data from Exel to SSIS database\Excel Source"
+              componentClassID="Microsoft.ExcelSource"
+              contactInfo="Excel Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Excel Source"
+              name="Excel Source"
+              usesDispositions="true"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">PersonTable</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mapping from parameters in the SQL command to variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import data from Exel to SSIS database\Excel Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[Excel Connection Manager]"
+                  connectionManagerRefId="Package.ConnectionManagers[Excel Connection Manager]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output]"
+                  name="Excel Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Id]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Id]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Id]"
+                      name="Id"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[FirstName]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[FirstName]"
+                      name="FirstName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[LastName]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[LastName]"
+                      name="LastName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[City]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[City]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[City]"
+                      name="City"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[DateOfBirth]"
+                      dataType="date"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[DateOfBirth]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[DateOfBirth]"
+                      name="DateOfBirth"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Sex]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Sex]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Sex]"
+                      name="Sex"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[EyeColor]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[EyeColor]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[EyeColor]"
+                      name="EyeColor"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[ShoeSize]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[ShoeSize]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[ShoeSize]"
+                      name="ShoeSize"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Height]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Height]"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].Columns[Height]"
+                      name="Height"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Id]"
+                      dataType="r8"
+                      name="Id" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[FirstName]"
+                      dataType="nText"
+                      name="FirstName" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[LastName]"
+                      dataType="nText"
+                      name="LastName" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[City]"
+                      dataType="nText"
+                      name="City" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[DateOfBirth]"
+                      dataType="date"
+                      name="DateOfBirth" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Sex]"
+                      dataType="nText"
+                      name="Sex" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[EyeColor]"
+                      dataType="nText"
+                      name="EyeColor" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[ShoeSize]"
+                      dataType="r8"
+                      name="ShoeSize" />
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output].ExternalColumns[Height]"
+                      dataType="r8"
+                      name="Height" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output]"
+                  isErrorOut="true"
+                  name="Excel Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Id]"
+                      dataType="r8"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Id]"
+                      name="Id" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      dataType="nText"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[FirstName]"
+                      name="FirstName" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[LastName]"
+                      dataType="nText"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[LastName]"
+                      name="LastName" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[City]"
+                      dataType="nText"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[City]"
+                      name="City" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[DateOfBirth]"
+                      dataType="date"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[DateOfBirth]"
+                      name="DateOfBirth" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Sex]"
+                      dataType="nText"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Sex]"
+                      name="Sex" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[EyeColor]"
+                      dataType="nText"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[EyeColor]"
+                      name="EyeColor" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ShoeSize]"
+                      dataType="r8"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ShoeSize]"
+                      name="ShoeSize" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Height]"
+                      dataType="r8"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[Height]"
+                      name="Height" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import data from Exel to SSIS database\OLE DB Destination"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="OLE DB Destination"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[City]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LAPTOP-K3DT06D7\SQLEXPRESS.SSIS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LAPTOP-K3DT06D7\SQLEXPRESS.SSIS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[City]"
+                      cachedDataType="ui8"
+                      cachedName="City"
+                      cachedSortKeyPosition="-1"
+                      externalMetadataColumnId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      lineageId="Package\Import data from Exel to SSIS database\Sort.Outputs[Sort Output].Columns[City]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[City]"
+                      dataType="numeric"
+                      name="City"
+                      precision="20" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Import data from Exel to SSIS database\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Import data from Exel to SSIS database\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Import data from Exel to SSIS database\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\Import data from Exel to SSIS database\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Import data from Exel to SSIS database\Sort.Inputs[Sort Input].Columns[City]"
+                      cachedDataType="ui8"
+                      cachedName="City"
+                      lineageId="Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1].Columns[City]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">-1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Import data from Exel to SSIS database\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Import data from Exel to SSIS database\Sort.Outputs[Sort Output].Columns[City]"
+                      dataType="ui8"
+                      lineageId="Package\Import data from Exel to SSIS database\Sort.Outputs[Sort Output].Columns[City]"
+                      name="City"
+                      sortKeyPosition="-1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1].Columns[City]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Import data from Exel to SSIS database.Paths[Aggregate Output 1]"
+              endId="Package\Import data from Exel to SSIS database\Sort.Inputs[Sort Input]"
+              name="Aggregate Output 1"
+              startId="Package\Import data from Exel to SSIS database\Aggregate.Outputs[Aggregate Output 1]" />
+            <path
+              refId="Package\Import data from Exel to SSIS database.Paths[Excel Source Output]"
+              endId="Package\Import data from Exel to SSIS database\Aggregate.Inputs[Aggregate Input 1]"
+              name="Excel Source Output"
+              startId="Package\Import data from Exel to SSIS database\Excel Source.Outputs[Excel Source Output]" />
+            <path
+              refId="Package\Import data from Exel to SSIS database.Paths[Sort Output]"
+              endId="Package\Import data from Exel to SSIS database\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Sort Output"
+              startId="Package\Import data from Exel to SSIS database\Sort.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{029A6312-3B6B-493E-8306-F1329F997E42}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Import data from Exel to SSIS database" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="187,56" />
+        <NodeLayout
+          Size="267,42"
+          Id="Package\Import data from Exel to SSIS database"
+          TopLeft="195,153" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="268.5,98">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="60,55"
+              Start="0,0"
+              End="60,47.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,23.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,23.5"
+                    Point2="0,27.5"
+                    Point3="4,27.5" />
+                  <mssgle:LineSegment
+                    End="56,27.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="56,27.5"
+                    Point2="60,27.5"
+                    Point3="60,31.5" />
+                  <mssgle:LineSegment
+                    End="60,47.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Import data from Exel to SSIS database">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="139,42"
+          Id="Package\Import data from Exel to SSIS database\Excel Source"
+          TopLeft="315,117" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\Import data from Exel to SSIS database\Sort"
+          TopLeft="287,291" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Import data from Exel to SSIS database\OLE DB Destination"
+          TopLeft="134,366" />
+        <EdgeLayout
+          Id="Package\Import data from Exel to SSIS database.Paths[Sort Output]"
+          TopLeft="336,333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-116.5,33"
+              Start="0,0"
+              End="-116.5,25.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,12.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,12.5"
+                    Point2="0,16.5"
+                    Point3="-4,16.5" />
+                  <mssgle:LineSegment
+                    End="-112.5,16.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-112.5,16.5"
+                    Point2="-116.5,16.5"
+                    Point3="-116.5,20.5" />
+                  <mssgle:LineSegment
+                    End="-116.5,25.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-66.25,21.5,16,16"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="127,42"
+          Id="Package\Import data from Exel to SSIS database\Aggregate"
+          TopLeft="331,212" />
+        <EdgeLayout
+          Id="Package\Import data from Exel to SSIS database.Paths[Excel Source Output]"
+          TopLeft="384.5,159">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10,53"
+              Start="0,0"
+              End="10,45.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.5"
+                    Point2="0,26.5"
+                    Point3="4,26.5" />
+                  <mssgle:LineSegment
+                    End="6,26.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6,26.5"
+                    Point2="10,26.5"
+                    Point3="10,30.5" />
+                  <mssgle:LineSegment
+                    End="10,45.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Import data from Exel to SSIS database.Paths[Aggregate Output 1]"
+          TopLeft="394.5,254">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-58.5,37"
+              Start="0,0"
+              End="-58.5,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5"
+                    Point2="0,18.5"
+                    Point3="-4,18.5" />
+                  <mssgle:LineSegment
+                    End="-54.5,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-54.5,18.5"
+                    Point2="-58.5,18.5"
+                    Point3="-58.5,22.5" />
+                  <mssgle:LineSegment
+                    End="-58.5,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import data from Exel to SSIS database\Excel Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Import data from Exel to SSIS database\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
